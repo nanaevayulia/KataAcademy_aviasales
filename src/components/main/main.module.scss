@@ -1,0 +1,13 @@
+@import '../../variables';
+
+.main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+@media (max-width: 680px) {
+    .main {
+        gap: 15px;
+    }
+}

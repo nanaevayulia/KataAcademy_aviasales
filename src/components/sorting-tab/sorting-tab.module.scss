@@ -1,0 +1,42 @@
+@import '../../variables';
+
+.tabs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    text-transform: uppercase;
+
+    &__item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 50px;
+        border: 1px solid #DFE5EC;
+        border-right: none;
+        background-color: $white-color;
+        padding: 10px;
+        text-align: center;
+
+        &:first-child {
+            border-radius: 5px 0 0 5px;
+        }
+
+        &:last-child {
+            border-right: 1px solid #DFE5EC;
+            border-radius: 0 5px 5px 0;
+        }
+
+        &:hover {
+            cursor: pointer;
+            background-color: $blue-color;
+            border-color: $blue-color;
+            color: $white-color;
+            transition: 0.2s ease-in-out;
+        }
+    }
+}
+
+.active {
+    background-color: $blue-color;
+    border-color: $blue-color;
+    color: $white-color;
+}

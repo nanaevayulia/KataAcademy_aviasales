@@ -1,0 +1,65 @@
+@import '../../variables';
+
+.ticket {
+    width: 100%;
+    display: grid;
+    row-gap: 10px;
+    background-color: $white-color;
+    border-radius: $border-radius;
+    box-shadow: $shadow;
+    padding: 15px 20px;
+
+    &__price {
+        color: $blue-color;
+        font-size: 24px;
+        line-height: 24px;
+        text-transform: uppercase;
+    }
+
+    &__info {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        column-gap: 10px;
+    }
+
+    &__text {
+        color: $gray-color;
+        text-transform: uppercase;
+        line-height: 18px;
+    }
+
+    &__data {
+        font-size: 14px;
+        line-height: 21px;
+    }
+}
+
+.price_logo {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 680px) {
+    .ticket {
+        &__price {
+            font-size: 21px;
+            line-height: 22px;
+        }
+
+        &__logo {
+            max-width: 100px;
+        }
+
+        &__text {
+            line-height: 18px;
+        }
+        
+        &__data {
+            font-size: 13px;
+            line-height: 18px;
+        }
+    }
+}
