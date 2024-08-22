@@ -1,34 +1,34 @@
 const _baseURL = 'https://aviasales-test-api.kata.academy/';
 
-const fetchAPI = async (url) => {
-  try {
-    const resp = await fetch(url);
-
-    if (!resp.ok) {
-      throw new Error(`Could not fetch ${_baseURL}, received ${resp.status}`);
-    }
-    return await resp.json();
-  } catch (err) {
-    console.error('Возникла проблема с fetch запросом: ', err.message);
-    return err.message;
-  }
-};
-
-export const setSearchId = () => {
+const setSearchId = async () => {
   if (sessionStorage.getItem('searchId')) {
     return sessionStorage.getItem('searchId');
   }
 
-  return fetchAPI(`${_baseURL}search`).then(({ searchId }) => {
-    sessionStorage.setItem('searchId', searchId);
-    return searchId;
-  });
+  const resp = await fetch(`${_baseURL}search`);
+  const obj = await resp.json();
+
+  sessionStorage.setItem('searchId', obj.searchId);
+  return obj.searchId;
 };
 
 export const getTickets = async () => {
-  const searchId = await setSearchId();
+  try {
+    const searchId = await setSearchId();
+    const response = await fetch(`${_baseURL}tickets?searchId=${searchId}`);
+    const obj = await response.json();
+    const { stop, tickets } = await obj;
 
-  const response = await fetchAPI(`${_baseURL}tickets?searchId=${searchId}`);
-  if (response.stop) sessionStorage.removeItem('searchId');
-  return response;
+    if (stop) {
+      sessionStorage.removeItem('searchId');
+    }
+
+    return { stop, tickets };
+  } catch (err) {
+    if (err.status === 500) {
+      getTickets();
+    }
+    console.error('Возникла проблема с fetch запросом: ', err.message);
+    return err.message;
+  }
 };

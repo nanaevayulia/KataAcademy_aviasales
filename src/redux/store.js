@@ -3,10 +3,12 @@ import { thunk } from 'redux-thunk';
 
 import filterReducer from './filter-reducer';
 import apiReducer from './api-reducer';
+import sortingReducer from './sorting-reducer';
 
 const reducer = combineReducers({
   filterReducer,
   apiReducer,
+  sortingReducer,
 });
 
 const composeEnhancers =

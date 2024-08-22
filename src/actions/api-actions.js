@@ -6,13 +6,14 @@ const getError = (payload) => ({ type: 'error', payload });
 
 export const getTicketsApi = () => (dispatch) => {
   return getTickets()
-    .then((resp) => {
-      dispatch(getTicketList(resp.tickets));
-      dispatch(getLoading(false));
+    .then(({ stop, tickets }) => {
+      dispatch(getTicketList(tickets));
+      dispatch(getLoading(!stop));
       dispatch(getError(false));
     })
     .catch(() => {
-      dispatch(getError(true));
+      dispatch(getTicketList([]));
       dispatch(getLoading(false));
+      dispatch(getError(true));
     });
 };

@@ -63,7 +63,8 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "husky": "^8.0.0",
     "lint-staged": "^15.2.9",
-    "prettier": "^3.3.3"
+    "prettier": "^3.3.3",
+    "redux-immutable-state-invariant": "^2.1.0"
   },
   "husky": {
     "hooks": {

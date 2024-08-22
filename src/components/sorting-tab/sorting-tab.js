@@ -1,17 +1,27 @@
+import { connect } from 'react-redux';
+
+import { sortingTickets } from '../../actions/sorting-actions';
+
 import style from './sorting-tab.module.scss';
 
-export default function SortingTab() {
+const SortingTab = ({ sortTabs, sortingTickets }) => {
   return (
-    <div className={style['tabs']}>
-      <div className={`${style['tabs__item']} ${style.active}`}>
-        <span>Самый дешевый</span>
-      </div>
-      <div className={style['tabs__item']}>
-        <span>Самый быстрый</span>
-      </div>
-      <div className={style['tabs__item']}>
-        <span>Оптимальный</span>
-      </div>
-    </div>
+    <ul className={style['tabs']}>
+      {sortTabs.map((el, id) => {
+        return (
+          <li
+            key={id}
+            className={`${style['tabs__item']} ${el.checked ? style['checked'] : ''}`}
+            onClick={() => sortingTickets(el.value)}
+          >
+            <span>{el.text}</span>
+          </li>
+        );
+      })}
+    </ul>
   );
-}
+};
+
+const mapStateToProps = (state) => ({ sortTabs: state.sortingReducer });
+
+export default connect(mapStateToProps, { sortingTickets })(SortingTab);

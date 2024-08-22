@@ -8,7 +8,7 @@ const initialState = {
 const apiReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'getTickets':
-      return { ...state, tickets: action.payload };
+      return { ...state, tickets: [...state.tickets, ...action.payload] };
 
     case 'loading':
       return { ...state, loading: action.payload };

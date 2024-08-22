@@ -15,6 +15,7 @@
         background-color: $white-color;
         padding: 10px;
         text-align: center;
+        list-style: none;
 
         &:first-child {
             border-radius: 5px 0 0 5px;
@@ -35,7 +36,7 @@
     }
 }
 
-.active {
+.checked {
     background-color: $blue-color;
     border-color: $blue-color;
     color: $white-color;
