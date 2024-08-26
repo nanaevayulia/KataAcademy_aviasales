@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 const _baseURL = 'https://aviasales-test-api.kata.academy/';
 
 const setSearchId = async () => {
@@ -12,10 +13,20 @@ const setSearchId = async () => {
   return obj.searchId;
 };
 
-export const getTickets = async () => {
+export const getTickets = async (repeatCount = 1) => {
   try {
     const searchId = await setSearchId();
-    const response = await fetch(`${_baseURL}tickets?searchId=${searchId}`);
+    const url = `${_baseURL}tickets?searchId=${searchId}`;
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      return repeatCount > 0
+        ? getTickets(repeatCount - 1)
+        : (function () {
+            throw new Error(`Could not fetch ${url}, received ${response.status}`);
+          })();
+    }
+
     const obj = await response.json();
     const { stop, tickets } = await obj;
 
@@ -25,9 +36,6 @@ export const getTickets = async () => {
 
     return { stop, tickets };
   } catch (err) {
-    if (err.status === 500) {
-      getTickets();
-    }
     console.error('Возникла проблема с fetch запросом: ', err.message);
     return err.message;
   }

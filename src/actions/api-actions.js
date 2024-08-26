@@ -12,7 +12,6 @@ export const getTicketsApi = () => (dispatch) => {
       dispatch(getError(false));
     })
     .catch(() => {
-      dispatch(getTicketList([]));
       dispatch(getLoading(false));
       dispatch(getError(true));
     });

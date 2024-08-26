@@ -13,17 +13,10 @@ const TicketList = ({ tickets, loading, error, sorting, filter, getTicketsApi })
   const [count, setCount] = useState(5);
 
   useEffect(() => {
-    getTicketsApi();
-  }, []);
-
-  useEffect(() => {
     if (loading) {
       getTicketsApi();
-      if (!loading) {
-        return () => console.log('unmount');
-      }
     }
-  }, [loading, tickets]);
+  });
 
   const showMoreTickets = () => {
     setCount((count) => {
@@ -74,13 +67,13 @@ const TicketList = ({ tickets, loading, error, sorting, filter, getTicketsApi })
     }
   };
 
+  const ticketsSlice = sortingTicketList(filterTickets(tickets, filter), sortingValue).slice(0, count);
+
   const spinner = loading && <Spin indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} />;
   const errorMessage =
-    error && !loading ? (
+    ticketsSlice.length === 0 && error ? (
       <Alert message="Упс, возникла ошибка!" description="К сожалению, указанная страница не найдена" type="error" />
     ) : null;
-
-  const ticketsSlice = sortingTicketList(filterTickets(tickets, filter), sortingValue).slice(0, count);
 
   const noTickets =
     ticketsSlice.length === 0 && !error && !loading ? (
@@ -88,7 +81,7 @@ const TicketList = ({ tickets, loading, error, sorting, filter, getTicketsApi })
     ) : null;
 
   const ticketsList =
-    ticketsSlice.length > 0 && !error ? (
+    ticketsSlice.length > 0 ? (
       <>
         <ul className={style.list}>
           {ticketsSlice.map((ticket, id) => {
